@@ -22,7 +22,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: "eu-west-3"
         run: |
-          aws s3 cp deploy.zip s3://tu-bucket-deployment/
+          aws s3 cp deploy.zip s3://safewater-deployment-bucket/
 
       - name: Deploy with CodeDeploy
         env:
@@ -33,4 +33,4 @@ jobs:
           aws deploy create-deployment \
             --application-name SafeWaterApp \
             --deployment-group-name SafeWaterDeploymentGroup \
-            --s3-location bucket=tu-bucket-deployment,bundleType=zip,key=deploy.zip
+            --s3-location bucket=safewater-deployment-bucket,bundleType=zip,key=deploy.zip
