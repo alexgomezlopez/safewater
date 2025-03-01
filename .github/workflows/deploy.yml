@@ -31,6 +31,6 @@ jobs:
           AWS_REGION: "eu-west-3"
         run: |
           aws deploy create-deployment \
-            --application-name SafeWaterApp \
-            --deployment-group-name SafeWaterDeploymentGroup \
+            --application-name SafeWater-Backend-Deploy \
+            --deployment-group-name SafeWater-Backend-Deploy-Group \
             --s3-location bucket=tu-bucket-deployment,bundleType=zip,key=deploy.zip
