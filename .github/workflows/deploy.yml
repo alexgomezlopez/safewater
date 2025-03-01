@@ -1,0 +1,36 @@
+name: Deploy to EC2 with CodeDeploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Zip project
+        run: zip -r deploy.zip . -x '*.git*'
+
+      - name: Upload to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "eu-west-3"
+        run: |
+          aws s3 cp deploy.zip s3://tu-bucket-deployment/
+
+      - name: Deploy with CodeDeploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "eu-west-3"
+        run: |
+          aws deploy create-deployment \
+            --application-name SafeWaterApp \
+            --deployment-group-name SafeWaterDeploymentGroup \
+            --s3-location bucket=tu-bucket-deployment,bundleType=zip,key=deploy.zip
