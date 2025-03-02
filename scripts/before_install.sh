@@ -1,19 +1,23 @@
 #!/bin/bash
+set -e  # Esto hará que el script se detenga si hay un error
 
-# Actualiza el sistema
+# Actualizar repositorios
 sudo apt update -y
 
-# Elimina paquetes problemáticos
-sudo apt remove -y nodejs npm || true
+# Verificar si Node.js ya está instalado y en qué versión
+if ! command -v node &> /dev/null
+then
+    echo "Instalando Node.js y npm..."
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    sudo apt install -y nodejs
+else
+    echo "Node.js ya está instalado"
+fi
 
-# Instala Node.js y npm correctamente
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo bash -
-sudo apt install -y nodejs
+# Eliminar conflictos con npm si los hay
+sudo apt-get remove -y npm || true
+sudo apt-get install -y npm
 
-# Verifica instalación de Node.js y npm
-node -v
-npm -v
-
-# Navega al backend y ejecuta npm install
-cd /home/ubuntu/safewater/backend || exit 1
+# Instalar dependencias del backend
+cd /home/ubuntu/safewater/backend
 npm install
