@@ -1,8 +1,14 @@
 version: 0.0
 os: linux
 files:
-  - source: .
+  - source: /
     destination: /home/ubuntu/safewater
+permissions:
+  - object: /home/ubuntu/safewater
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
 hooks:
   ApplicationStop:
     - location: scripts/stop_server.sh

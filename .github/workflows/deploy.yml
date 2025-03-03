@@ -33,4 +33,5 @@ jobs:
           aws deploy create-deployment \
             --application-name SafeWater-Backend-Deploy \
             --deployment-group-name SafeWater-Backend-Deploy-Group \
-            --s3-location bucket=tu-bucket-deployment,bundleType=zip,key=deploy.zip
+            --s3-location bucket=tu-bucket-deployment,bundleType=zip,key=deploy.zip \
+            --file-exists-behavior OVERWRITE
