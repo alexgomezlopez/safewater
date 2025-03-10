@@ -1,4 +1,4 @@
-export default function Home(): JSX.Element {
+export default function Home() {
   return (
     <div className="max-w-7xl mx-auto py-20 px-4 text-center">
       <h1 className="text-5xl font-bold text-gray-900 mb-6">

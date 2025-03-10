@@ -1,4 +1,4 @@
-export default function ComoFunciona(): JSX.Element {
+export default function ComoFunciona(){
     return (
       <div className="max-w-7xl mx-auto py-16 px-4">
         <h1 className="text-4xl font-bold text-gray-900 mb-6">¿Cómo Funciona?</h1>
